@@ -4,6 +4,8 @@ import _02_cat_facts_API.data_transfer_objects.CatWrapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import _01_intro_to_APIs.data_transfer_objects.CatFact;
 import reactor.core.publisher.Mono;
 
 /*
@@ -35,10 +37,10 @@ public class CatFactsApi {
         This request doesn't require url parameters, so you can omit the .uri() method call entirely
         */
     	
-
+    	Mono<String> stringMono = webClient.get().retrieve().bodyToMono(String.class);
         //Collect the response from the Mono object
-
-
+    	String response = stringMono.block();
+    	//System.out.println(response);
         /*
         Print out the actual JSON response -
         this is what you will input into jsonschema2pojo.com
@@ -56,15 +58,17 @@ public class CatFactsApi {
         */
     }
 
-    public String getCatFact() {
-
+    public CatFact getCatFact() {
+    	Mono<CatFact> stringMono = webClient.get().retrieve().bodyToMono(CatFact.class);
+        //Collect the response from the Mono object
+    	CatFact response = stringMono.block();
         //Make the request, saving the response in an object of the type that you just created in your
         //data_transfer_objects package (CatWrapper)
 
         //Use block() to collect the response into a java object using the class you just created
 
         //return the Object
-        return null;
+        return response;
 
 
     }
