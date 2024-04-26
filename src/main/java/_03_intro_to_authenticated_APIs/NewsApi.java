@@ -60,41 +60,33 @@ public class NewsApi {
     }
 
     public ApiExampleWrapper getNewsStoryByTopic(String topic) {
-        Mono<ApiExampleWrapper> apiExampleWrapperMono = webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .queryParam("q", topic)
-                        .queryParam("sortBy", "popularity")
-                        .queryParam("apiKey", apiKey)
-                        .build())
-                .retrieve()
-                .bodyToMono(ApiExampleWrapper.class);
-
-        return apiExampleWrapperMono.block();
+    	Mono<ApiExampleWrapper> wrap = webClient.get().uri(uriBuilder -> uriBuilder
+    			.queryParam("q", topic)
+    			.queryParam("apiKey", apiKey)
+    			.build())
+    			.retrieve()
+    			.bodyToMono(ApiExampleWrapper.class);
+    	
+        return wrap.block();
     }
 
     public String findStory(String topic){
 
         //Get a story from News API
-        ApiExampleWrapper apiExampleWrapper = getNewsStoryByTopic(topic);
+    	ApiExampleWrapper articles = getNewsStoryByTopic(topic);
 
         //Get the first article
-        Article article = apiExampleWrapper.getArticles().get(0);
+    	Article article = articles.getArticles().get(0);
 
         //Get the title of the article
-        String articleTitle = article.getTitle();
+        String title = article.getTitle();
 
         //Get the content of the article
-        String articleContent = article.getContent();
-
+        String content = article.getContent();
         //Get the URL of the article
-        String articleUrl = article.getUrl();
-
-        //Create the message
-        String message =
-                articleTitle + " -\n"
-                        + articleContent
-                        + "\nFull article: " + articleUrl;
-
+        String url = article.getUrl();
+        //Create the message(return)
+        String message = "Title: " + title + "\n\n" + "Content: " + content + "\n\n" + "Source: " + url;
         //Send the message
         return message;
     }

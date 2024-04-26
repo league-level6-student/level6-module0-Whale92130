@@ -75,9 +75,10 @@ public class CatFactsApi {
 
     public String findCatFact(){
         //use the getCatFact method to retrieve a cat fact
-
+    	CatFact fact = getCatFact();
         //return the first (and only) String in the Arraylist of data in the response
-        return null;
+    	
+        return fact.getData().get(0);
     }
 
     public void setWebClient(WebClient webClient) {
