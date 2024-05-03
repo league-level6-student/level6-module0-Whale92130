@@ -50,7 +50,7 @@ class CarTest {
         when(gasTank.fill(octane)).thenReturn(true);
 
         //when
-        boolean actualFilled = gasTank.fill(octane);
+        boolean actualFilled = car.fillTank(octane);
 
         //then
         assertEquals(expectedFilled, actualFilled);
@@ -65,7 +65,7 @@ class CarTest {
         when(gasTank.getFuelLevel()).thenReturn(expectedFuelLevelGallons);
 
         //when
-        double actualFuelLevelGallons = gasTank.getFuelLevel();
+        double actualFuelLevelGallons = car.getFuelLevel();
 
         //then
         assertEquals(expectedFuelLevelGallons, actualFuelLevelGallons);
